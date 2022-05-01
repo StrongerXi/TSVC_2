@@ -1,11 +1,12 @@
 
-CC=clang
-CXX=clang++
+CC=../../../llvm-project/build/bin/clang
+CXX=../../../llvm-project/build/bin/clang++
 # no FC for clang
 FC=
-flags = -O3 -fstrict-aliasing
-vecflags = -fvectorize -fslp-vectorize-aggressive
-novecflags = -fno-vectorize
+flags = -O3 -fstrict-aliasing -mllvm -unroll-runtime -mllvm -unroll-allow-partial -mllvm -slp-pre-opt -flegacy-pass-manager -mllvm -unroll-max-count=4 -mllvm -unroll-count=4
+vecflags = -fno-vectorize -fslp-vectorize
+novecflags = -fno-vectorize -fno-slp-vectorize
+custom_vec_flags = $(vecflags) -Xclang -load -Xclang ../../../build/lib/libSlpVectorizer.so -mllvm -alternative-slp
 omp_flags=-fopenmp=libomp
 
 ifdef VEC_REPORT

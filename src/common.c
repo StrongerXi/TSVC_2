@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <malloc.h>
 #include <string.h>
 
 void set_1d_array(real_t * arr, int length, real_t value, int stride);
@@ -155,8 +154,8 @@ void set_2d_array(real_t arr[LEN_2D][LEN_2D], real_t value, int stride)
 }
 
 void init(int** ip, real_t* s1, real_t* s2){
-    xx = (real_t*) memalign(ARRAY_ALIGNMENT, LEN_1D*sizeof(real_t));
-    *ip = (int *) memalign(ARRAY_ALIGNMENT, LEN_1D*sizeof(real_t));
+    xx = (real_t*) aligned_alloc(ARRAY_ALIGNMENT, LEN_1D*sizeof(real_t));
+    *ip = (int *) aligned_alloc(ARRAY_ALIGNMENT, LEN_1D*sizeof(real_t));
 
     for (int i = 0; i < LEN_1D; i = i+5){
         (*ip)[i]   = (i+4);

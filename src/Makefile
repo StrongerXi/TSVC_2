@@ -7,7 +7,7 @@ BIN_DIR=../bin/$(COMPILER)
 
 libs=-lm
 
-all : $(BIN_DIR)/tsvc_vec $(BIN_DIR)/tsvc_novec
+all : $(BIN_DIR)/tsvc_vec $(BIN_DIR)/tsvc_novec $(BIN_DIR)/tsvc_custom_vec
 
 $(BIN_DIR)/tsvc_% : tsvc_%.o $(COMMON_FILES)
 	@mkdir -p $(BIN_DIR)
@@ -18,6 +18,9 @@ $(BIN_DIR)/tsvc_% : tsvc_%.o $(COMMON_FILES)
 
 %_vec.o:%.c .FORCE
 	$(CC) $(flags) $(vecflags) -c -o $@ $<
+
+%_custom_vec.o:%.c .FORCE
+	$(CC) $(flags) $(custom_vec_flags) -c -o $@ $<
 
 # Compiled with IEEE math flags to make initialisation/checksum calculations more reproducable
 # Be wary that PGI doesn't respect IEEE properly with vectorisation
